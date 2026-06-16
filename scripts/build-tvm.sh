@@ -25,5 +25,5 @@ set(USE_CUTLASS   OFF)
 EOF
 cmake -S vendor/tvm -B vendor/tvm/build -GNinja
 cmake --build vendor/tvm/build --parallel "$(nproc)"
-pushd vendor/tvm/3rdparty/tvm-ffi; python3 -m pip install .; popd
-pushd vendor/tvm; python3 -m pip install .; popd
+pushd vendor/tvm/3rdparty/tvm-ffi; uv pip install .; popd
+pushd vendor/tvm; uv pip install .; popd
