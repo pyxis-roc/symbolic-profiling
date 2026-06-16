@@ -6,6 +6,7 @@ ARG USER_GID=${USER_UID}
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PATH=/workspaces/symbolic-profiling/.local/bin:"${PATH}"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
