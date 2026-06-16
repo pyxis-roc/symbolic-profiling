@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-[[ ! -e .venv ]] && uv venv --seed .venv
-source .venv/bin/activate
+if [[ -z "${VIRTUAL_ENV:-}" ]]; then
+    [[ ! -e .venv ]] && uv venv --seed .venv
+    source .venv/bin/activate
+fi
 
 ./scripts/build-z3.sh
 ./scripts/build-tvm.sh

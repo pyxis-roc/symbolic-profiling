@@ -3,8 +3,10 @@ set -euo pipefail
 
 PREFIX=$PWD/.venv
 
-[[ ! -e .venv ]] && uv venv --seed .venv
-source .venv/bin/activate
+if [[ -z "${VIRTUAL_ENV:-}" ]]; then
+    [[ ! -e .venv ]] && uv venv --seed .venv
+    source .venv/bin/activate
+fi
 
 pushd vendor/z3
 
