@@ -6,3 +6,7 @@
 	path = symb_form_tests
 	url = git@github.com:SoftJing1/symb_form_tests.git
 	branch = main
+[submodule "vendor/tvm"]
+	path = vendor/tvm
+	url = git@github.com:apache/tvm.git
+	branch = v0.24.0

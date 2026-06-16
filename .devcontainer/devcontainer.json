@@ -1,0 +1,25 @@
+{
+  "name": "Symbolic Profiling",
+  "build": {
+    "dockerfile": "../Containerfile.dev",
+    "context": "..",
+    "args": {
+      "USERNAME": "developer",
+      "USER_UID": "1000",
+      "USER_GID": "1000"
+    }
+  },
+  "remoteUser": "developer",
+  "containerUser": "developer",
+  "workspaceFolder": "/workspaces/symbolic-profiling",
+  "updateRemoteUserUID": true,
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}
