@@ -1,0 +1,8 @@
+[submodule "trip_counter"]
+	path = trip_counter
+	url = git@github.com:pyxis-roc/trip_counter.git
+	branch = main
+[submodule "symb_form_tests"]
+	path = symb_form_tests
+	url = git@github.com:SoftJing1/symb_form_tests.git
+	branch = main
