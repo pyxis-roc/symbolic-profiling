@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+[[ ! -e .venv ]] && uv venv --seed .venv
+source .venv/bin/activate
+
 cmake -E rm -rf vendor/tvm/build
 cmake -E make_directory vendor/tvm/build
 cp vendor/tvm/cmake/config.cmake vendor/tvm/build/config.cmake
@@ -18,4 +21,4 @@ cp vendor/tvm/cmake/config.cmake vendor/tvm/build/config.cmake
 } >> vendor/tvm/build/config.cmake
 cmake -S vendor/tvm -B vendor/tvm/build -GNinja
 cmake --build vendor/tvm/build --parallel "$(nproc)"
-pushd vendor/tvm/3rdparty/tvm-ffi; python -m pip install .; popd
+pushd vendor/tvm/3rdparty/tvm-ffi; python3 -m pip install .; popd
