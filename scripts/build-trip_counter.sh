@@ -11,7 +11,7 @@ fi
 pushd trip_counter
 
 rm -rf build && mkdir -pv build
-cmake -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B build
+cmake -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DLLVM_DIR="$(llvm-config-22 --cmakedir)" -S . -B build
 cmake --build build
 cmake --install build --prefix "$PREFIX"
 
