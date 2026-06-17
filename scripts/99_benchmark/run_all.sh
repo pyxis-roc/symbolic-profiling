@@ -6,7 +6,9 @@ if [[ -z "${VIRTUAL_ENV:-}" ]]; then
     source .venv/bin/activate
 fi
 
-./scripts/build-z3.sh
-./scripts/build-tvm.sh
-./scripts/build-instrGen.sh
-./scripts/build-trip_counter.sh
+TVM_OPS="${PWD}/symb_form_tests/tvm-ops"
+
+mkdir -pv results
+pushd results
+python "$TVM_OPS/benchmark.py"
+popd

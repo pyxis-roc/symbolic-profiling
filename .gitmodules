@@ -16,3 +16,6 @@
 [submodule "instrGen"]
 	path = instrGen
 	url = git@github.com:SoftJing1/instrGen.git
+[submodule "getBBCount"]
+	path = getBBCount
+	url = git@github.com:SoftJing1/getBBCount.git
