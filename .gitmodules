@@ -9,7 +9,7 @@
 [submodule "vendor/tvm"]
 	path = vendor/tvm
 	url = git@github.com:apache/tvm.git
-	branch = v0.24.0
+	branch = v0.21.0
 [submodule "vendor/z3"]
 	path = vendor/z3
 	url = git@github.com:Z3Prover/z3.git

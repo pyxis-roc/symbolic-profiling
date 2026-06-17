@@ -6,6 +6,7 @@ if [[ -z "${VIRTUAL_ENV:-}" ]]; then
     source .venv/bin/activate
 fi
 
+uv sync
 ./scripts/build-z3.sh
-./scripts/build-tvm.sh
+# ./scripts/build-tvm.sh
 ./scripts/build-trip_counter.sh
