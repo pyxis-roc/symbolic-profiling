@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -euo pipefail
 
 if [[ -z "${VIRTUAL_ENV:-}" ]]; then
@@ -6,7 +6,4 @@ if [[ -z "${VIRTUAL_ENV:-}" ]]; then
     source .venv/bin/activate
 fi
 
-./scripts/build-z3.sh
-./scripts/build-tvm.sh
-./scripts/build-instrGen.sh
-./scripts/build-trip_counter.sh
+pushd instrGen && uv pip install . && popd
