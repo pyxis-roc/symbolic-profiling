@@ -10,6 +10,8 @@ Currently, the following steps are necessary.
 First, open this project in VSCode, and use `Dev Containers: Reopen in Container` to open in container.
 This will build a Debian-based container that includes all dependencies and set up LLVM correctly.
 
+`git submodule update --init --recursice`
+
 Use `./run-all.sh` to build all dependencies and run benchmarks.
 
 Alternatively, run `scripts/00_setup/build-all.sh` to build all additional dependencies only. 
