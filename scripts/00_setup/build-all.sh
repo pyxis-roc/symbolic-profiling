@@ -6,8 +6,8 @@ if [[ -z "${VIRTUAL_ENV:-}" ]]; then
     source .venv/bin/activate
 fi
 
-./scripts/setup/build-z3.sh
-./scripts/setup/build-tvm.sh
-./scripts/setup/build-instrGen.sh
-./scripts/setup/build-getBBCount.sh
-./scripts/setup/build-trip_counter.sh
+./scripts/00_setup/build-z3.sh
+./scripts/00_setup/build-tvm.sh
+./scripts/00_setup/build-instrGen.sh
+./scripts/00_setup/build-getBBCount.sh
+./scripts/00_setup/build-trip_counter.sh
