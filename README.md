@@ -19,7 +19,11 @@ cd symbolic-profiling
 podman build -t symbolic-image
 ```
 
-TODO: Instructions for running the image.
+Then to run the image:
+
+```
+podman run -it --rm -v `pwd`:/workspaces/symbolic-profiling symbolic-image bash
+```
 
 ## Build and run from VSCode
 
