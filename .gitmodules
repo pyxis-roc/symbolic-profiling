@@ -4,7 +4,7 @@
 	branch = main
 [submodule "symb_form_tests"]
 	path = symb_form_tests
-	url = git@github.com:SoftJing1/symb_form_tests.git
+	url = git@github.com:pyxis-roc/symb_form_tests.git
 	branch = main
 [submodule "vendor/tvm"]
 	path = vendor/tvm
@@ -15,7 +15,7 @@
 	url = git@github.com:Z3Prover/z3.git
 [submodule "instrGen"]
 	path = instrGen
-	url = git@github.com:SoftJing1/instrGen.git
+	url = git@github.com:pyxis-roc/instrGen.git
 [submodule "getBBCount"]
 	path = getBBCount
-	url = git@github.com:SoftJing1/getBBCount.git
+	url = git@github.com:pyxis-roc/getBBCount.git
