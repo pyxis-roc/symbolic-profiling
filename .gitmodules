@@ -18,4 +18,5 @@
 	url = git@github.com:pyxis-roc/instrGen.git
 [submodule "getBBCount"]
 	path = getBBCount
-	url = git@github.com:pyxis-roc/getBBCount.git
+	url = git@github.com:SoftJing1/getBBCount.git
+
