@@ -16,13 +16,23 @@ temporary directory has plenty of space.
 
 ```
 cd symbolic-profiling
+git submodule update --init --recursive
 podman build -t symbolic-image
 ```
 
 Then to run the image:
 
 ```
-podman run -it --rm -v `pwd`:/workspaces/symbolic-profiling:U symbolic-image bash
+podman run -it --rm -v `pwd`:/workspaces/symbolic-profiling:U symbolic-image /bin/bash
+```
+
+Note that `podman run` _might_ change the owner and group IDs on the
+files depending on how it is set up. The following command, executed
+outside the stopped container, in the `symbolic-profiling` directory
+should restore permissions:
+
+```
+podman unshare chown -R 0:0 .
 ```
 
 ## Build and run from VSCode
@@ -35,9 +45,9 @@ This will build a Debian-based container that includes all dependencies and set 
 
 Once a container has been setup using either podman or VSCode, run the following commands inside it.
 
-`git submodule update --init --recursive`
-
-Use `./run-all.sh` to build all dependencies and run benchmarks.
+```
+./run-all.sh
+```
 
 Alternatively, run `scripts/00_setup/build-all.sh` to build all additional dependencies only.
 Run `scripts/99_benchmark/run_all.sh` to run benchmarks.
