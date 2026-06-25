@@ -15,7 +15,7 @@ cmake -E make_directory vendor/tvm/build
 cp vendor/tvm/cmake/config.cmake vendor/tvm/build/config.cmake
 cat >> vendor/tvm/build/config.cmake <<EOF
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
-set(USE_LLVM "llvm-config-17 --ignore-libllvm --link-static")
+set(USE_LLVM "llvm-config-20 --ignore-libllvm --link-static")
 set(HIDE_PRIVATE_SYMBOLS ON)
 set(USE_CUDA   OFF)
 set(USE_METAL   OFF)
