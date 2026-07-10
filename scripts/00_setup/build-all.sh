@@ -6,6 +6,8 @@ if [[ -z "${VIRTUAL_ENV:-}" ]]; then
     source .venv/bin/activate
 fi
 
+uv pip install matplotlib mizani pandas plotnine polars pyarrow
+
 ./scripts/00_setup/build-z3.sh
 ./scripts/00_setup/build-tvm.sh
 ./scripts/00_setup/build-instrGen.sh
