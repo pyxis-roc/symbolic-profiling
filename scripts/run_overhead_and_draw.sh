@@ -28,6 +28,8 @@ fi
 
 TVM_OPS="${REPO_ROOT}/symb_form_tests/tvm-ops"
 mkdir -p "$(dirname "${OVERHEAD_CSV}")"
+WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/symbolic-overhead.XXXXXX")"
+trap 'rm -rf "${WORK_DIR}"' EXIT
 
 if [[ "${OVERHEAD_CSV}" = /* ]]; then
     OVERHEAD_OUTPUT="${OVERHEAD_CSV}"
@@ -36,7 +38,7 @@ else
 fi
 
 pushd "${TVM_OPS}" >/dev/null
-python overhead.py "${MODE}" --output "${OVERHEAD_OUTPUT}" "$@"
+python overhead.py "${MODE}" --base-dir "${WORK_DIR}/optimized" --output "${OVERHEAD_OUTPUT}" "$@"
 popd >/dev/null
 
 "${SCRIPT_DIR}/draw_figures.sh" "${OVERHEAD_CSV}" "${OUTPUT_DIR}"
