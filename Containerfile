@@ -1,1 +1,60 @@
-Containerfile.dev
+FROM debian:trixie
+
+ARG USERNAME=developer
+ARG USER_UID=1000
+ARG USER_GID=${USER_UID}
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PATH=/workspaces/symbolic-profiling/.local/bin:"${PATH}"
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates curl
+
+RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key -o /etc/apt/trusted.gpg.d/apt.llvm.org.asc 
+RUN echo 'deb http://apt.llvm.org/trixie/ llvm-toolchain-trixie-22 main' >> /etc/apt/sources.list
+RUN echo 'deb-src http://apt.llvm.org/trixie/ llvm-toolchain-trixie-22 main' >> /etc/apt/sources.list
+RUN echo 'deb http://apt.llvm.org/trixie/ llvm-toolchain-trixie-20 main' >> /etc/apt/sources.list
+RUN echo 'deb-src http://apt.llvm.org/trixie/ llvm-toolchain-trixie-20 main' >> /etc/apt/sources.list
+
+# Note that we need LLVM 20 for TVM 0.21.0, and LLVM 22 for trip_counter.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    bash-completion build-essential \
+    clang cmake gdb git \
+    gnuplot ssh less libpapi-dev libtinfo-dev libz3-dev lld \
+    clang-22 libclang-22-dev llvm-22 llvm-22-dev libpolly-22-dev libclang-rt-22-dev \
+    clang-20 libclang-20-dev llvm-20 llvm-20-dev libpolly-20-dev libclang-rt-20-dev \
+    clang-17 libclang-17-dev llvm-17 llvm-17-dev libpolly-17-dev libclang-rt-17-dev \
+    make ninja-build linux-perf pkg-config \
+    python3 python3-dev python3-pip python3-venv python3-pytest \
+    sudo time zlib1g-dev libzstd-dev scons
+RUN update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-22 100 \
+    && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-17 100 \
+    && update-alternatives --set llvm-config /usr/bin/llvm-config-22 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-22 220 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-22 220 \
+    && update-alternatives --set clang /usr/bin/clang-22 \
+    && update-alternatives --set clang++ /usr/bin/clang++-22 \
+    && update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-22 220 \
+    && update-alternatives --set llvm-profdata /usr/bin/llvm-profdata-22 \
+    && update-alternatives --install /usr/bin/opt opt /usr/bin/opt-22 220 \
+    && update-alternatives --set opt /usr/bin/opt-22
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+RUN groupadd --gid "${USER_GID}" "${USERNAME}" \
+    && useradd --uid "${USER_UID}" --gid "${USER_GID}" -m "${USERNAME}" --shell /bin/bash \
+    && echo "${USERNAME} ALL=(root) NOPASSWD:ALL" > "/etc/sudoers.d/${USERNAME}" \
+    && chmod 0440 "/etc/sudoers.d/${USERNAME}"
+
+RUN mkdir -p /workspaces/symbolic-profiling && chown ${USERNAME} /workspaces/symbolic-profiling
+COPY --chown=${USERNAME} . /workspaces/symbolic-profiling
+
+USER ${USERNAME}
+
+WORKDIR /workspaces/symbolic-profiling
+
+RUN ./scripts/00_setup/build-all.sh
+
+CMD ["/bin/bash"]

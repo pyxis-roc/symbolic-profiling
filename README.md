@@ -17,14 +17,16 @@ temporary directory has plenty of space.
 ```
 cd symbolic-profiling
 git submodule update --init --recursive
-podman build -t symbolic-image
+podman build --tag symbolic-image -f Containerfile .
 ```
 
-Then to run the image:
+All dependencies are built into the image. To run benchmarks, run the image and run benchmark script:
 
 ```
-podman run -it --rm -v `pwd`:/workspaces/symbolic-profiling:U symbolic-image /bin/bash
+podman run --replace --rm --userns=keep-id -it --name symbolic-image symbolic-image /bin/bash
+./run-all.sh
 ```
+
 
 Note that `podman run` _might_ change the owner and group IDs on the
 files depending on how it is set up. The following command, executed
