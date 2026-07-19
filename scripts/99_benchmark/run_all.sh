@@ -8,7 +8,9 @@ fi
 
 TVM_OPS="${PWD}/symb_form_tests/tvm-ops"
 
-mkdir -pv results
-pushd results
+WORK_DIR="$(mktemp -d "${TMPDIR:-/tmp}/symbolic-benchmark.XXXXXX")"
+trap 'rm -rf "${WORK_DIR}"' EXIT
+
+pushd "${WORK_DIR}" >/dev/null
 python "$TVM_OPS/benchmark.py"
-popd
+popd >/dev/null
