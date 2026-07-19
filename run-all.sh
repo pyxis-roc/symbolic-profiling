@@ -2,4 +2,4 @@
 set -euo pipefail
 
 ./scripts/99_benchmark/run_all.sh
-./scripts/run_overhead_and_draw.sh
+./scripts/draw_figures.sh

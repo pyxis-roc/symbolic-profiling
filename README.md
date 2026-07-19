@@ -27,6 +27,7 @@ podman run --replace --rm --userns=keep-id -it --name symbolic-image symbolic-im
 ./run-all.sh
 ```
 
+This will recreate the figures used in our paper. To rerun the benchmark for overhead (it will take a long time), run `./scripts/run_overhead_and_draw.sh`.
 
 Note that `podman run` _might_ change the owner and group IDs on the
 files depending on how it is set up. The following command, executed
