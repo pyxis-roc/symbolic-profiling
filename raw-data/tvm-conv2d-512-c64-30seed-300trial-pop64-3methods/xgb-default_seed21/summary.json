@@ -1,0 +1,28 @@
+{
+  "database": "meta_schedule.JSONDatabase(0x5577974cb798)",
+  "method": "xgb-default",
+  "num_trials_per_iter": 16,
+  "population_size": 64,
+  "runner_min_repeat_ms": 50,
+  "runner_number": 1,
+  "runner_repeat": 3,
+  "seed": 21,
+  "target": "llvm -mcpu=generic -num-cores 24",
+  "total_wall_sec": 934.6325922105461,
+  "trace": "../tvm_prod_conv2d_512_c64_20seed_300trial_iter16_pop64_3methods_symbolic_first_20260707_052903/xgb-default_seed21/trace.jsonl",
+  "trials": 300,
+  "workload": {
+    "ci": 64,
+    "co": 64,
+    "dilation": 1,
+    "dtype": "float32",
+    "h": 512,
+    "kernel": 3,
+    "n": 1,
+    "out_dtype": "float32",
+    "padding": 1,
+    "stride": 1,
+    "w": 512
+  },
+  "workload_id": "conv2d_nhwc_n1_h512_w512_ci64_co64_k3_s1_p1_d1_float32"
+}

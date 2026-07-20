@@ -20,3 +20,7 @@
 	path = getBBCount
 	url = git@github.com:SoftJing1/getBBCount.git
 
+[submodule "tvm-comparison"]
+	path = tvm-comparison
+	url = git@github.com:pyxis-roc/symbolic-xgb.git
+	branch = main
