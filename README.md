@@ -39,6 +39,44 @@ should restore permissions:
 podman unshare chown -R 0:0 .
 ```
 
+## Build a container image using Docker
+
+Make sure your temporary directory and Docker storage directory have plenty of
+space. This repository's build context is large because it includes the vendored
+submodules.
+
+```
+cd symbolic-profiling
+git submodule update --init --recursive
+docker build --network=host \
+  --build-arg USER_UID="$(id -u)" \
+  --build-arg USER_GID="$(id -g)" \
+  --tag symbolic-image -f Containerfile .
+```
+
+The `--network=host` option is not part of the Podman command, but it is useful
+on Docker installations where bridge networking is unavailable or restricted
+during image builds. If Docker bridge networking works on your machine, the same
+build can be run without `--network=host`.
+
+All dependencies are built into the image. To run the artifact validation script
+directly:
+
+```
+docker run --rm --network=host symbolic-image ./run-all.sh
+```
+
+To start an interactive shell instead:
+
+```
+docker rm -f symbolic-container 2>/dev/null || true
+docker run --rm --network=host -it --name symbolic-container symbolic-image /bin/bash
+./run-all.sh
+```
+
+Docker does not have Podman's `--replace` option; remove any old named container
+with `docker rm -f symbolic-container` before reusing the same name.
+
 ## Build and run from VSCode
 
 First, open this project in VSCode, and use `Dev Containers: Reopen in Container` to open in container.
