@@ -39,6 +39,44 @@ should restore permissions:
 podman unshare chown -R 0:0 .
 ```
 
+## Build a container image using Docker
+
+Make sure your temporary directory and Docker storage directory have plenty of
+space. This repository's build context is large because it includes the vendored
+submodules.
+
+```
+cd symbolic-profiling
+git submodule update --init --recursive
+docker build --network=host \
+  --build-arg USER_UID="$(id -u)" \
+  --build-arg USER_GID="$(id -g)" \
+  --tag symbolic-image -f Containerfile .
+```
+
+The `--network=host` option is not part of the Podman command, but it is useful
+on Docker installations where bridge networking is unavailable or restricted
+during image builds. If Docker bridge networking works on your machine, the same
+build can be run without `--network=host`.
+
+All dependencies are built into the image. To run the artifact validation script
+directly:
+
+```
+docker run --rm --network=host symbolic-image ./run-all.sh
+```
+
+To start an interactive shell instead:
+
+```
+docker rm -f symbolic-container 2>/dev/null || true
+docker run --rm --network=host -it --name symbolic-container symbolic-image /bin/bash
+./run-all.sh
+```
+
+Docker does not have Podman's `--replace` option; remove any old named container
+with `docker rm -f symbolic-container` before reusing the same name.
+
 ## Build and run from VSCode
 
 First, open this project in VSCode, and use `Dev Containers: Reopen in Container` to open in container.
@@ -62,11 +100,13 @@ The checked-in paper data lives in `raw-data/`:
 
 - `raw-data/overhead_full_with_instance.csv`
 - `raw-data/characterize.csv`
+- `raw-data/tvm-conv2d-512-c64-30seed-300trial-pop64-3methods/`
 
-To draw the paper figures from those CSV files, run this inside the container:
+To draw the paper figures from the checked-in data, run this inside the container:
 
 ```
 ./scripts/draw_figures.sh
+./scripts/draw_tvm_figures.sh
 ```
 
 By default, this writes generated figures to `figures/paper/`. The script also accepts an alternate overhead CSV and output directory:
@@ -77,7 +117,13 @@ By default, this writes generated figures to `figures/paper/`. The script also a
 
 The characterization file is always `raw-data/characterize.csv`; users do not need to regenerate it.
 
-## Run overhead experiment and draw new figures
+The TVM figure script writes to `figures/paper/tvm-comparison/` by default. It also accepts an alternate TVM raw-data directory and output directory:
+
+```
+./scripts/draw_tvm_figures.sh raw-data/tvm-conv2d-512-c64-30seed-300trial-pop64-3methods figures/paper/tvm-comparison
+```
+
+## Run experiments and draw new figures
 
 To run the overhead experiment and draw figures from the newly generated data, run this inside the container:
 
@@ -94,3 +140,19 @@ For a faster validation run:
 ```
 
 This writes `raw-data/user-overhead-smoke-with-instance.csv` and redraws figures in `figures/user-run/`.
+
+To run the TVM comparison experiment and draw figures from the newly generated data:
+
+```
+./scripts/run_tvm_and_draw.sh full
+```
+
+By default, this runs the 300-trial TVM comparison for `random`, `xgb-default`, and `xgb-symbolic-only`, writes user-generated data to `raw-data/user-tvm-full-conv2d-512-c64-3methods/`, and writes figures to `figures/user-run/tvm-comparison/`.
+
+For a faster TVM validation run:
+
+```
+./scripts/run_tvm_and_draw.sh smoke
+```
+
+This writes `raw-data/user-tvm-smoke-conv2d-512-c64-3methods/` and redraws TVM figures in `figures/user-run/tvm-comparison/`.
