@@ -117,6 +117,20 @@ By default, this writes generated figures to `figures/paper/`. The script also a
 
 The characterization file is always `raw-data/characterize.csv`; users do not need to regenerate it.
 
+To regenerate the characterization statistics used for Table 2 and Table 3
+(Appendix), run:
+
+```
+./scripts/regenerate_characterize.sh
+```
+
+By default, this writes `raw-data/user-characterize.csv`. To replace the
+checked-in characterization CSV explicitly, pass the output path:
+
+```
+./scripts/regenerate_characterize.sh raw-data/characterize.csv
+```
+
 The TVM figure script writes to `figures/paper/tvm-comparison/` by default. It also accepts an alternate TVM raw-data directory and output directory:
 
 ```

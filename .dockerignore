@@ -1,0 +1,9 @@
+.git
+.venv
+results
+figures
+raw-data/user-*
+symb_form_tests/tvm-ops/optimized
+*.profraw
+*.profdata
+*.so
