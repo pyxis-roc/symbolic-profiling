@@ -10,7 +10,6 @@ fi
 
 pushd vendor/z3
 
-git clean -fx src
 [[ -d build ]] && rm -rf build
 mkdir build
 cmake -GNinja -DCMAKE_BUILD_TYPE=RelWithDebInfo --install-prefix "$PREFIX" -S . -B build
