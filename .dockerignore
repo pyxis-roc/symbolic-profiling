@@ -1,4 +1,5 @@
 .git
+**/.git
 .venv
 **/build
 **/__pycache__
