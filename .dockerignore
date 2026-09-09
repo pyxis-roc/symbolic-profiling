@@ -1,0 +1,13 @@
+.git
+.venv
+**/build
+**/__pycache__
+**/*.egg-info
+results
+figures
+raw-data/user-*
+symb_form_tests/tvm-ops/optimized
+symbolic-image-*.tar.gz*
+*.profraw
+*.profdata
+*.so
